@@ -53,6 +53,23 @@ def manager_show_user(request, id):
         return HttpResponseRedirect("/")
 
 
+def super_delete_admin(request, id):
+    """ delete a specific admin not to be able to login and his account is deleted
+    @params : request  , id"""
+
+    current_user = request.user
+    if(is_authorized_admin(request)):
+        if(current_user.is_superuser):
+            user = User.objects.get(pk=id)
+            if(user.profile.profile_pic != None):
+                delete_profile_pic(user.profile.profile_pic)
+            user.delete()
+            log(current_user.username+" removed " + user.username+".")
+        return HttpResponseRedirect("/manager/admins")
+    else:
+        return HttpResponseRedirect("/")
+
+
 def is_authorized_admin(request):
     if(request.user.is_authenticated):
         if(request.user.is_staff):
