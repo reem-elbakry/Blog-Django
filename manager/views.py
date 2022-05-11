@@ -18,3 +18,7 @@ def show(request, id):
 
 def delete(request, id):
     return manager_delete_user(request, id)
+
+
+def delete_admin(request, id):
+    return super_delete_admin(request, id)
