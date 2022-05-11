@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Created by https://www.gitignore.io/api/django
 # Edit at https://www.gitignore.io/?templates=django
 
@@ -122,3 +123,8 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/django
+=======
+/blog/settings.py
+*.pyc
+__pycache__/
+>>>>>>> 4ae45ee9d35b7bd0afa8069a97e92ee83c327241
