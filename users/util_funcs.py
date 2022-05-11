@@ -1,5 +1,5 @@
 from .models import Profile
-from dj_blog.settings import BASE_DIR
+from blog.settings import BASE_DIR
 import os
 from users.logger import log
 
