@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .crud_users import *
 from posts.models import Post, Category, Profanity
-# from posts.forms import PostForm, CommentForm, ProfanityForm, CategoryForm
+from posts.forms import ProfanityForm, CategoryForm
 
 # Create your views here.
 
@@ -62,5 +62,54 @@ def posts(request):
         context = {'posts': posts, 'categories': categories,
                    'profane_words': profane_words}
         return render(request, 'manager/landing.html', context)
+    else:
+        return HttpResponseRedirect("/")
+
+
+def add_category(request):
+    if(is_authorized_admin(request)):
+        form = CategoryForm()
+        if request.method == 'POST':
+            form = CategoryForm(request.POST)
+            if form.is_valid():
+                form.save()
+                log("form is valid")
+                return HttpResponseRedirect('/manager/posts#categories')
+        else:
+            context = {"pt_form": form}
+            return render(request, "manager/categoryform.html", context)
+    else:
+        return HttpResponseRedirect("/")
+
+
+def delete_category(request, cat_id):
+    if(is_authorized_admin(request)):
+        category = Category.objects.get(id=cat_id)
+        category.delete()
+        return HttpResponseRedirect('/manage/posts#categories')
+    else:
+        return HttpResponseRedirect("/")
+
+
+def add_profane_word(request):
+    if(is_authorized_admin(request)):
+        form = ProfanityForm()
+        if request.method == 'POST':
+            form = ProfanityForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/manager/posts#forbidden')
+        else:
+            context = {"pt_form": form}
+            return render(request, "manager/form.html", context)
+    else:
+        return HttpResponseRedirect("/")
+
+
+def delete_profane_word(request, id):
+    if(is_authorized_admin(is_authorized_admin(request))):
+        profane_word = Profanity.objects.get(id=id)
+        profane_word.delete()
+        return HttpResponseRedirect('/manager/posts#forbidden')
     else:
         return HttpResponseRedirect("/")
