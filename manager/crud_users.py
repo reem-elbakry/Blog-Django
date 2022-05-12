@@ -128,6 +128,20 @@ def manager_promote_user(request, id):
         return HttpResponseRedirect("/")
 
 
+def manager_show_normal_users(request):
+    """ show all normal users [not admins nor super users]
+    @params : request """
+
+    if(is_authorized_admin(request)):
+        users = User.objects.filter(is_staff__exact=False)
+        paginator = Paginator(users, 5)
+        page_number = request.GET.get('page')
+        page_users = paginator.get_page(page_number)
+        return render(request, "manager/users.html", {"users": page_users})
+    else:
+        return HttpResponseRedirect("/")
+
+
 def is_authorized_admin(request):
     if(request.user.is_authenticated):
         if(request.user.is_staff):

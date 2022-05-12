@@ -8,6 +8,10 @@ def index(request):
     return render(request, 'manager/index.html')
 
 
+def users(request):
+    return manager_show_normal_users(request)
+
+
 def admins(request):
     return manager_show_admins(request)
 
