@@ -5,7 +5,7 @@ from .crud_users import *
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'manager/index.html')
 
 
 def admins(request):
