@@ -115,6 +115,19 @@ def super_demote_admin(request, id):
         return HttpResponseRedirect("/")
 
 
+def manager_promote_user(request, id):
+    """promote a specific user to become an admin with all determined permissions
+    @params : request  , id"""
+
+    if(is_authorized_admin(request)):
+        user = User.objects.get(pk=id)
+        promote_to_staff(user)
+        log(request.user.username+" promoted " + user.username+".")
+        return HttpResponseRedirect("/manager/users")
+    else:
+        return HttpResponseRedirect("/")
+
+
 def is_authorized_admin(request):
     if(request.user.is_authenticated):
         if(request.user.is_staff):

@@ -34,3 +34,7 @@ def unlock_admin(request, id):
 
 def demote(request, id):
     return super_demote_admin(request, id)
+
+
+def promote(request, id):
+    return manager_promote_user(request, id)
