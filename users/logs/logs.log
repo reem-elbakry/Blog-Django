@@ -3,3 +3,5 @@ invalid registration form
 created a new user successfully with username: reem
 couldn't send email message[Errno 111] Connection refused
 admin unlocked gabr.
+no picunsupported operand type(s) for +: 'WindowsPath' and 'str'
+admin removed gabr.
