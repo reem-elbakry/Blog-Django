@@ -11,22 +11,6 @@ import os
 """
 
 
-def manager_show_admins(request):
-    """ show all admin users [admins or super users]
-    @params : request """
-
-    if(is_authorized_admin(request)):
-        admins = User.objects.filter(is_staff__exact=True)
-        paginator = Paginator(admins, 5)
-        page_number = request.GET.get('page')
-        page_admins = paginator.get_page(page_number)
-        context = {"admins": page_admins,
-                   "superuser": request.user.is_superuser}
-        return render(request, "manager/admins.html", context)
-    else:
-        return HttpResponseRedirect("/")
-
-
 def manager_delete_user(request, id):
     """ delete a specific user not to be able to login and his account is deleted
     @params : request  , id"""
@@ -66,6 +50,22 @@ def super_delete_admin(request, id):
             user.delete()
             log(current_user.username+" removed " + user.username+".")
         return HttpResponseRedirect("/manager/admins")
+    else:
+        return HttpResponseRedirect("/")
+
+
+def manager_show_admins(request):
+    """ show all admin users [admins or super users]
+    @params : request """
+
+    if(is_authorized_admin(request)):
+        admins = User.objects.filter(is_staff__exact=True)
+        paginator = Paginator(admins, 5)
+        page_number = request.GET.get('page')
+        page_admins = paginator.get_page(page_number)
+        context = {"admins": page_admins,
+                   "superuser": request.user.is_superuser}
+        return render(request, "manager/admins.html", context)
     else:
         return HttpResponseRedirect("/")
 
