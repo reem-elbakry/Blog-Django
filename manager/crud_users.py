@@ -70,6 +70,21 @@ def manager_show_admins(request):
         return HttpResponseRedirect("/")
 
 
+def super_lock_admin(request, id):
+    """lock a specific admin not to be able to login again but keeping his account and permissions alive
+    @params : request  , id"""
+
+    current_user = request.user
+    if(is_authorized_admin(request)):
+        if(current_user.is_superuser):
+            user = User.objects.get(pk=id)
+            lock_user(user)
+            log(current_user.username+" locked " + user.username+".")
+        return HttpResponseRedirect("/manager/admins")
+    else:
+        return HttpResponseRedirect("/")
+
+
 def is_authorized_admin(request):
     if(request.user.is_authenticated):
         if(request.user.is_staff):

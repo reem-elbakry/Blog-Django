@@ -22,3 +22,7 @@ def delete(request, id):
 
 def delete_admin(request, id):
     return super_delete_admin(request, id)
+
+
+def lock_admin(request, id):
+    return super_lock_admin(request, id)
