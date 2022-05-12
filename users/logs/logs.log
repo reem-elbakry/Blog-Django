@@ -2,3 +2,6 @@ invalid registration form
 /media/iti.png
 created a new user successfully with username: reem
 couldn't send email message[Errno 111] Connection refused
+/media/defaultImage.png
+created a new user successfully with username: Abdelfattah
+couldn't send email message[WinError 10061] No connection could be made because the target machine actively refused it
