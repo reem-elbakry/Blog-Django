@@ -16,6 +16,12 @@ urlpatterns = [
     path("users/unlock/<int:id>/", views.unlock, name="unlock"),
     path("users/delete/<int:id>/", views.delete, name="delete"),
 
+    path("", views.dash),
+    path("posts/addcategory", views.add_category),
+    path("posts/delcategory/<cat_id>", views.delete_category),
+    path("posts/addprofaneword", views.add_profane_word),
+    path("posts/delprofaneword/<id>", views.delete_profane_word),
+
     path("posts/", views.posts, name="main_post_page")
 
 ]
