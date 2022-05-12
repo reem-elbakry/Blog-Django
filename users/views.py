@@ -57,3 +57,45 @@ def register(request):
 
 
 
+def login_view(request):
+    """this custom login view does the following:
+    1- checks if request comes from an already logged in user so it redirects him to hompage again
+    2- check if the method is post and then the submitted form is valid
+    3- check if the credentials are correct using authenticate method 
+    4- check if user isn't registered takes him back to login back
+    5- if user is registered but locked redirects him to blocked page"""
+
+    if(not request.user.is_authenticated):  # check if user is already logged in
+        if request.method == "POST":
+            # using named parameter as request.Post isn't the first parameter by default
+            login_form = LoginForm(data=request.POST)
+            if(login_form.is_valid()):
+                username = request.POST['username']
+                password = request.POST["password"]
+                # authenticate the user with provided data
+                user = authenticate(username=username, password=password)
+                if user is not None:  # user authenticated
+                    if(isLocked(user)):
+                        log(user.username + " blocked user")
+                        # redirect the user to a custom page for blocked users
+                        return HttpResponseRedirect("/users/blocked")
+                    else:
+                        login(request, user)
+                        log(user.username + " logged in successfully")
+                        # redirect to user homepage
+                        return HttpResponseRedirect("/")
+                else:
+                    log("cannot login from login page")
+
+            else:
+                log("invalid login form")
+        else:
+            login_form = LoginForm()
+        context = {"login_form": login_form}
+        return render(request, 'users/login.html', context)
+    else:
+        return HttpResponseRedirect("/")
+
+
+
+
