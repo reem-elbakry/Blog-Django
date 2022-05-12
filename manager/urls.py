@@ -16,4 +16,6 @@ urlpatterns = [
     path("users/unlock/<int:id>/", views.unlock, name="unlock"),
     path("users/delete/<int:id>/", views.delete, name="delete"),
 
+    path("posts/", views.posts, name="main_post_page")
+
 ]

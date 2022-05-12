@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .crud_users import *
+from posts.models import Post, Category, Profanity
+# from posts.forms import PostForm, CommentForm, ProfanityForm, CategoryForm
 
 # Create your views here.
 
@@ -50,3 +52,15 @@ def lock(request, id):
 
 def unlock(request, id):
     return manager_unlock_user(request, id)
+
+
+def posts(request):
+    if(is_authorized_admin(request)):
+        posts = Post.objects.all()
+        categories = Category.objects.all()
+        profane_words = Profanity.objects.all()
+        context = {'posts': posts, 'categories': categories,
+                   'profane_words': profane_words}
+        return render(request, 'manager/landing.html', context)
+    else:
+        return HttpResponseRedirect("/")
