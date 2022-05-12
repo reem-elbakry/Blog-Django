@@ -12,7 +12,6 @@ urlpatterns = [
     path("admins/demote/<int:id>", views.demote, name="demote"),
     path("users/promote/<int:id>/", views.promote, name="promote"),
     path("users/show/<int:id>/", views.show, name="show"),
-
-
+    path("users/lock/<int:id>/", views.lock, name="lock"),
 
 ]

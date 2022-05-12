@@ -42,3 +42,7 @@ def demote(request, id):
 
 def promote(request, id):
     return manager_promote_user(request, id)
+
+
+def lock(request, id):
+    return manager_lock_user(request, id)
