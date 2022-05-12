@@ -2,11 +2,21 @@ invalid registration form
 /media/iti.png
 created a new user successfully with username: reem
 couldn't send email message[Errno 111] Connection refused
+<<<<<<< HEAD
+admin unlocked gabr.
+no picunsupported operand type(s) for +: 'WindowsPath' and 'str'
+admin removed gabr.
+admin demoted gado.
+=======
 /media/defaultImage.png
 created a new user successfully with username: Abdelfattah
 couldn't send email message[WinError 10061] No connection could be made because the target machine actively refused it
+<<<<<<< HEAD
 invalid registration form
 invalid registration form
 /media/defaultImage.png
 created a new user successfully with username: marwaezzatmohamed
 couldn't send email message[Errno 111] Connection refused
+=======
+>>>>>>> 04f25e2460c88d9b076f186eabc42b7eb344da72
+>>>>>>> 7cba23b9c6ae588e81508891338bfa2f84579c82

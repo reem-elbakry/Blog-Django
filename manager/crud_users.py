@@ -70,6 +70,104 @@ def manager_show_admins(request):
         return HttpResponseRedirect("/")
 
 
+def super_lock_admin(request, id):
+    """lock a specific admin not to be able to login again but keeping his account and permissions alive
+    @params : request  , id"""
+
+    current_user = request.user
+    if(is_authorized_admin(request)):
+        if(current_user.is_superuser):
+            user = User.objects.get(pk=id)
+            lock_user(user)
+            log(current_user.username+" locked " + user.username+".")
+        return HttpResponseRedirect("/manager/admins")
+    else:
+        return HttpResponseRedirect("/")
+
+
+def super_unlock_admin(request, id):
+    """unlock a specific adminr  to be able to login again
+    @params : request  , id"""
+
+    current_user = request.user
+    if(is_authorized_admin(request)):
+        if(current_user.is_superuser):
+            user = User.objects.get(pk=id)
+            unlock_user(user)
+            log(current_user.username+" unlocked " + user.username+".")
+        return HttpResponseRedirect("/manager/admins")
+    else:
+        return HttpResponseRedirect("/")
+
+
+def super_demote_admin(request, id):
+    """demote  a specific admin to become a normal user again
+    @params : request  , id"""
+
+    current_user = request.user
+    if(is_authorized_admin(request)):
+        if(current_user.is_superuser):
+            user = User.objects.get(pk=id)
+            demote_user(user)
+            log(current_user.username+" demoted " + user.username+".")
+        return HttpResponseRedirect("/manager/admins")
+    else:
+        return HttpResponseRedirect("/")
+
+
+def manager_promote_user(request, id):
+    """promote a specific user to become an admin with all determined permissions
+    @params : request  , id"""
+
+    if(is_authorized_admin(request)):
+        user = User.objects.get(pk=id)
+        promote_to_staff(user)
+        log(request.user.username+" promoted " + user.username+".")
+        return HttpResponseRedirect("/manager/users")
+    else:
+        return HttpResponseRedirect("/")
+
+
+def manager_show_normal_users(request):
+    """ show all normal users [not admins nor super users]
+    @params : request """
+
+    if(is_authorized_admin(request)):
+        users = User.objects.filter(is_staff__exact=False)
+        paginator = Paginator(users, 5)
+        page_number = request.GET.get('page')
+        page_users = paginator.get_page(page_number)
+        return render(request, "manager/users.html", {"users": page_users})
+    else:
+        return HttpResponseRedirect("/")
+
+
+def manager_lock_user(request, id):
+    """ lock a specific user not to be able to login again but his account is still alive
+    @params : request  , id"""
+
+    if(is_authorized_admin(request)):
+        user = User.objects.get(pk=id)
+        lock_user(user)
+        log(request.user.username+" locked " + user.username+".")
+        return HttpResponseRedirect("/manager/users")
+    else:
+        return HttpResponseRedirect("/")
+
+
+def manager_unlock_user(request, id):
+    """ unlock a specific user and becomes able to login again
+    @params : request  , id"""
+
+    if(is_authorized_admin(request)):
+        user = User.objects.get(pk=id)
+        unlock_user(user)
+        log(request.user.username+" unlocked " + user.username+".")
+        return HttpResponseRedirect("/manager/users")
+    else:
+        return HttpResponseRedirect("/")
+
+
 def is_authorized_admin(request):
     if(request.user.is_authenticated):
         if(request.user.is_staff):
