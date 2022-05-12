@@ -65,6 +65,10 @@ def unlock(request, id):
     return manager_unlock_user(request, id)
 
 
+def sort(request, num):
+    return admin_sort(request, num)
+
+
 def posts(request):
     if(is_authorized_admin(request)):
         posts = Post.objects.all()
