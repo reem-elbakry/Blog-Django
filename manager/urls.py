@@ -13,5 +13,6 @@ urlpatterns = [
     path("users/promote/<int:id>/", views.promote, name="promote"),
     path("users/show/<int:id>/", views.show, name="show"),
     path("users/lock/<int:id>/", views.lock, name="lock"),
+    path("users/unlock/<int:id>/", views.unlock, name="unlock"),
 
 ]

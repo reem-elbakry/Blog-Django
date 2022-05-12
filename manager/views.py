@@ -46,3 +46,7 @@ def promote(request, id):
 
 def lock(request, id):
     return manager_lock_user(request, id)
+
+
+def unlock(request, id):
+    return manager_unlock_user(request, id)
