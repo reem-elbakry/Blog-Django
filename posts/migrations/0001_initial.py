@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=30)),
-                # ('user', models.ManyToManyField(blank=True, null=True, related_name='categories', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ManyToManyField(blank=True, null=True, related_name='categories', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name_plural': 'Categories',
