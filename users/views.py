@@ -143,6 +143,26 @@ def blocked(request):
         return render(request, "users/blocked.html", {"admins": admins})
     return HttpResponseRedirect("/")
 
+def change_password(request):
+    if(request.user.is_authenticated):
+        if request.method == 'POST':
+            form = ChangePasswordForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)
+                log("changed password for "+user.username)
+                return HttpResponseRedirect('/users/profile')
+            else:
+                log("couldn't change password for "+user.username)
+        else:
+            form = ChangePasswordForm(request.user)
+        return render(request, 'users/change_password.html', {
+            'form': form
+        })
+    else:
+        return HttpResponseRedirect("/")
+
+
 
 
 
