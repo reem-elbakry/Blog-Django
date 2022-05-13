@@ -75,3 +75,22 @@ def subscribe(request, cat_id):
     except Exception as ex:
         log("couldn't send email message"+str(ex))
     return HttpResponseRedirect('/')
+
+
+def createPost(request):
+    student_form = PostForm()
+    if request.method == 'POST':
+        student_form = PostForm(request.POST, request.FILES)
+    if student_form.is_valid():
+            post = student_form.save(commit=False)
+            post.user = request.user
+            tag_list = getTags(request.POST.get('post_tags'))
+            post.save()
+            queryset = Tag.objects.filter(name__in=tag_list)
+            post.tags.set(queryset)
+            return HttpResponseRedirect('/')
+    else:
+        context = {"student_form": student_form}
+        return render(request, "form_post.html", context)
+        
+       
