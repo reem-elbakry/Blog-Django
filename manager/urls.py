@@ -15,6 +15,8 @@ urlpatterns = [
     path("users/lock/<int:id>/", views.lock, name="lock"),
     path("users/unlock/<int:id>/", views.unlock, name="unlock"),
     path("users/delete/<int:id>/", views.delete, name="delete"),
+    path("users/sorted/<int:num>", views.sort,
+         name="sort"),
 
     path("", views.dash),
     path("posts/addcategory", views.add_category),
