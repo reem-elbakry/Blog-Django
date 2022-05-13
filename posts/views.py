@@ -5,6 +5,8 @@ from users.logger import log
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponse
 from posts.forms import PostForm, CommentForm
+from users.util_funcs import delete_profile_pic
+from users.logger import log
 
 
 # Create your views here.
@@ -74,6 +76,13 @@ def subscribe(request, cat_id):
                   'dproject.os40@gmail.com', [user.email], fail_silently=False,)
     except Exception as ex:
         log("couldn't send email message"+str(ex))
+    return HttpResponseRedirect('/')  
+
+
+def unsubscribe(request, cat_id):
+    user = request.user
+    category = Category.objects.get(id=cat_id)
+    category.user.remove(user)
     return HttpResponseRedirect('/')
 
 
