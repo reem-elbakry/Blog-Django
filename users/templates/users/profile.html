@@ -1,5 +1,6 @@
-{% extends 'users/base.html' %} {% block page %}
-
+{% extends 'base.html' %} 
+{% block main_block %}
+{% include "header.html" %}
 <div class="container my-5" id="colorlib-main">
   <div class="container mb-5">
     {%if userprofile.profile_pic%}
