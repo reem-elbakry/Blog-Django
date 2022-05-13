@@ -98,7 +98,44 @@ def profile(request):
         context = {"user": user, "userprofile": userprofile}
         return render(request, "users/profile.html", context)
     else:
-        return HttpResponseRedirect("/")        
+        return HttpResponseRedirect("/")   
+
+
+def edit_profile(request):
+    if(request.user.is_authenticated):
+        if request.method == "POST":
+            edit_form = EditProfileForm(data=request.POST)
+            profile_form = ProfileForm(request.POST, request.FILES)
+            user = request.user
+            if(edit_form.is_valid()):
+                log("valid edit form")
+                file = request.FILES.get("profile_pic")
+                user.first_name = request.POST["first_name"]
+                user.last_name = request.POST["last_name"]
+                user.profile.bio = request.POST["bio"]
+                if(file != None):
+                    if(user.profile.profile_pic != None):
+                        delete_profile_pic(user.profile.profile_pic)
+                    user.profile.profile_pic = file
+                user.save()
+                user.profile.save()
+                log(user.username + "  updated his profile")
+                return HttpResponseRedirect("/users/profile")
+            else:
+                log("invalid change form")
+                return HttpResponseRedirect("/")
+        else:
+            user = request.user
+            user_data = {"first_name": user.first_name,
+                         "last_name": user.last_name}
+            bio_data = {"bio": user.profile.bio}
+            edit_form = EditProfileForm(data=user_data)
+            profile_form = ProfileForm(data=bio_data)
+            context = {"edit_form": edit_form, "profile_form": profile_form}
+            return render(request, "users/edit.html", context)
+    else:
+        return HttpResponseRedirect("/")
+
 
 
 
