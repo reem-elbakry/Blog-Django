@@ -136,6 +136,14 @@ def edit_profile(request):
     else:
         return HttpResponseRedirect("/")
 
+def blocked(request):
+    # this view will be fired when a locked user tries to login
+    if(not request.user.is_authenticated):
+        admins = User.objects.all().filter(is_staff__exact=True)
+        return render(request, "users/blocked.html", {"admins": admins})
+    return HttpResponseRedirect("/")
+
+
 
 
 
