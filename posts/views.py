@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from posts.forms import PostForm, CommentForm
 from users.util_funcs import delete_profile_pic
 from users.logger import log
-
+from django.db.models import Q
 
 # Create your views here.
 
@@ -125,6 +125,20 @@ def tagPosts(request, tag_id):
     page_obj = paginator.get_page(page_number)
     categotries = Category.objects.all()
     tags = Tag.objects.all()[:10]
+    user = request.user
+    context = {'page_obj': page_obj,
+               'categories': categotries, 'tags': tags, 'user': user}
+    return render(request, 'home.html', context)
+
+#################### search button in sidebar action ##################
+def search(request):
+    query = request.GET.get('q')
+    posts = Post.objects.filter(Q(title__icontains=query))
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    categotries = Category.objects.all()
+    tags = Tag.objects.filter(Q(name__icontains=query))[:10]
     user = request.user
     context = {'page_obj': page_obj,
                'categories': categotries, 'tags': tags, 'user': user}

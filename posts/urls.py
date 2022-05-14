@@ -8,6 +8,7 @@ urlpatterns = [
     path('createPost/', views.createPost, name='create'),
     path('category/<cat_id>', views.categoryPosts),
     path('tag/<tag_id>', views.tagPosts),
+    path('search', views.search),
 ]    	
 
 

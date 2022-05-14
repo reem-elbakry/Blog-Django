@@ -50,3 +50,10 @@ invalid login form
 couldn't send email message[Errno 111] Connection refused
 couldn't send email message[Errno 111] Connection refused
 couldn't send email message[Errno 111] Connection refused
+/media/avatar.jpeg
+created a new user successfully with username: nayra
+couldn't send email message[Errno 111] Connection refused
+couldn't send email message[Errno 111] Connection refused
+valid edit form
+no picunsupported operand type(s) for +: 'PosixPath' and 'str'
+nayra  updated his profile
