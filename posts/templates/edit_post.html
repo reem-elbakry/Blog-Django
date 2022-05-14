@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block post_block %}
+<h1>  Edit post </h1>
+<form method= "POST" action="" enctype="multipart/form-data"> {% csrf_token %}
+{{ pt_form.as_p }}
+<label for="post_tags">Tags:</label>
+<input type="text" name="post_tags" id="post_tags" class="form-control">
+
+<button class="btn btn-info m-3" type="Submit" style="padding: 10px 20px !important" value="create post">Save</button>
+<a href="/" class="btn btn-danger" style="padding: 10px 20px !important" type="Reset">Cancel</a>
+</form>
+{% endblock %}

@@ -4,6 +4,7 @@ from django.core.paginator import  Paginator
 from users.logger import log
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, get_object_or_404
 from posts.forms import PostForm, CommentForm
 from users.util_funcs import delete_profile_pic
 from users.logger import log
@@ -88,6 +89,29 @@ def post_detail(request, id):
         'user': user
     }
     return render(request, 'single.html', context)
+
+########################## update post #######################
+def post_update(request, id):
+    post = get_object_or_404(Post, id=id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            img = request.FILES.get('image')
+            if (img):
+                if(post.image):
+                    delete_profile_pic(post.image)
+                post.image = img
+            post.user = request.user
+            tag_list = getTags(request.POST.get('post_tags'))
+            post.save()
+            queryset = Tag.objects.filter(name__in=tag_list)
+            post.tags.set(queryset)
+            return HttpResponseRedirect('/')
+    else:
+        form = PostForm(instance=post)
+        context = {"pt_form": form}
+        return render(request, "edit_post.html", context)    
 
 ########################## delete post #######################
 def post_delete(request, num):
