@@ -93,10 +93,10 @@ def createPost(request):
     if student_form.is_valid():
             post = student_form.save(commit=False)
             post.user = request.user
-            tag_list = getTags(request.POST.get('post_tags'))
+            # tag_list = getTags(request.POST.get('post_tags'))
             post.save()
-            queryset = Tag.objects.filter(name__in=tag_list)
-            post.tags.set(queryset)
+            # queryset = Tag.objects.filter(name__in=tag_list)
+            # post.tags.set(queryset)
             return HttpResponseRedirect('/')
     else:
         context = {"student_form": student_form}
