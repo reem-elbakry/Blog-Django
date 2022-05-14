@@ -48,3 +48,5 @@ invalid registration form
 invalid login form
 invalid login form
 couldn't send email message[Errno 111] Connection refused
+couldn't send email message[Errno 111] Connection refused
+couldn't send email message[Errno 111] Connection refused
