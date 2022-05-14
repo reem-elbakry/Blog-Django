@@ -27,7 +27,30 @@ def posts(request):
                'tags': tags, 'user': user, 'popular_posts': popular_posts}
     return render(request, 'home.html', context)
 
+########################## create post #######################
+def createPost(request):
+    student_form = PostForm()
+    if request.method == 'POST':
+        student_form = PostForm(request.POST, request.FILES)
+    if student_form.is_valid():
+            post = student_form.save(commit=False)
+            post.user = request.user
+            tag_list = getTags(request.POST.get('post_tags'))
+            post.save()
+            queryset = Tag.objects.filter(name__in=tag_list)
+            post.tags.set(queryset)
+            return HttpResponseRedirect('/')
+    else:
+        context = {"student_form": student_form}
+        return render(request, "form_post.html", context)
 
+########################## tags #######################
+def getTags(string):
+    tag_list = list(string.split(" "))
+    for tag in tag_list:
+        if not Tag.objects.filter(name=tag):
+            Tag.objects.create(name=tag)
+    return tag_list 
 
 def post_detail(request, id):
     categotries = Category.objects.all()
@@ -84,23 +107,7 @@ def unsubscribe(request, cat_id):
     category = Category.objects.get(id=cat_id)
     category.user.remove(user)
     return HttpResponseRedirect('/')
-
-
-def createPost(request):
-    student_form = PostForm()
-    if request.method == 'POST':
-        student_form = PostForm(request.POST, request.FILES)
-    if student_form.is_valid():
-            post = student_form.save(commit=False)
-            post.user = request.user
-            # tag_list = getTags(request.POST.get('post_tags'))
-            post.save()
-            # queryset = Tag.objects.filter(name__in=tag_list)
-            # post.tags.set(queryset)
-            return HttpResponseRedirect('/')
-    else:
-        context = {"student_form": student_form}
-        return render(request, "form_post.html", context)
+       
 
 ########################## searche by category#######################
 def categoryPosts(request, cat_id):
