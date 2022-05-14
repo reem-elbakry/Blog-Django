@@ -52,6 +52,7 @@ def getTags(string):
             Tag.objects.create(name=tag)
     return tag_list 
 
+
 def post_detail(request, id):
     categotries = Category.objects.all()
     tags = Tag.objects.all()[:10]
@@ -87,6 +88,12 @@ def post_detail(request, id):
         'user': user
     }
     return render(request, 'single.html', context)
+
+########################## delete post #######################
+def post_delete(request, num):
+    instance = Post.objects.get(id=num)
+    instance.delete()
+    return HttpResponseRedirect('/')
 
 
 def subscribe(request, cat_id):
