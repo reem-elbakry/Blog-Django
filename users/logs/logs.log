@@ -2,7 +2,7 @@ invalid registration form
 /media/iti.png
 created a new user successfully with username: reem
 couldn't send email message[Errno 111] Connection refused
-<<<<<<< HEAD
+
 admin unlocked gabr.
 no picunsupported operand type(s) for +: 'WindowsPath' and 'str'
 admin removed gabr.
@@ -11,15 +11,49 @@ admin demoted gado.
 /media/defaultImage.png
 created a new user successfully with username: Abdelfattah
 couldn't send email message[WinError 10061] No connection could be made because the target machine actively refused it
-<<<<<<< HEAD
 invalid registration form
 invalid registration form
 /media/defaultImage.png
 created a new user successfully with username: marwaezzatmohamed
 couldn't send email message[Errno 111] Connection refused
-=======
->>>>>>> 04f25e2460c88d9b076f186eabc42b7eb344da72
->>>>>>> 7cba23b9c6ae588e81508891338bfa2f84579c82
+
 invalid login form
 invalid login form
 admin logged in successfully
+<<<<<<< HEAD
+Abdelfattah logged in successfully
+=======
+reem logged in successfully
+
+=======
+reem logged in successfully
+valid edit form
+no picunsupported operand type(s) for +: 'PosixPath' and 'str'
+reem  updated his profile
+
+valid edit form
+no picunsupported operand type(s) for +: 'WindowsPath' and 'str'
+Abdelfattah  updated his profile
+Abdelfattah logged in successfully
+Abdelfattah logged in successfully
+changed password for Abdelfattah
+valid edit form
+Abdelfattah  updated his profile
+invalid login form
+invalid registration form
+invalid login form
+invalid registration form
+invalid registration form
+invalid registration form
+invalid login form
+invalid login form
+couldn't send email message[Errno 111] Connection refused
+couldn't send email message[Errno 111] Connection refused
+couldn't send email message[Errno 111] Connection refused
+/media/avatar.jpeg
+created a new user successfully with username: nayra
+couldn't send email message[Errno 111] Connection refused
+couldn't send email message[Errno 111] Connection refused
+valid edit form
+no picunsupported operand type(s) for +: 'PosixPath' and 'str'
+nayra  updated his profile

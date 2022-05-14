@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from posts.forms import PostForm, CommentForm
 from users.util_funcs import delete_profile_pic
 from users.logger import log
-
+from django.db.models import Q
 
 # Create your views here.
 
@@ -84,3 +84,65 @@ def unsubscribe(request, cat_id):
     category = Category.objects.get(id=cat_id)
     category.user.remove(user)
     return HttpResponseRedirect('/')
+
+
+def createPost(request):
+    student_form = PostForm()
+    if request.method == 'POST':
+        student_form = PostForm(request.POST, request.FILES)
+    if student_form.is_valid():
+            post = student_form.save(commit=False)
+            post.user = request.user
+            tag_list = getTags(request.POST.get('post_tags'))
+            post.save()
+            queryset = Tag.objects.filter(name__in=tag_list)
+            post.tags.set(queryset)
+            return HttpResponseRedirect('/')
+    else:
+        context = {"student_form": student_form}
+        return render(request, "form_post.html", context)
+
+########################## searche by category#######################
+def categoryPosts(request, cat_id):
+    category = Category.objects.get(id=cat_id)
+    posts = Post.objects.filter(category=category)
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    categotries = Category.objects.all()
+    tags = Tag.objects.all()[:10]
+    user = request.user
+    context = {'page_obj': page_obj,
+               'categories': categotries, 'tags': tags, 'user': user}
+    return render(request, 'home.html', context)
+
+####################search by tag name################
+def tagPosts(request, tag_id):
+    tag = Tag.objects.get(id=tag_id)
+    posts = tag.post_set.all()
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    categotries = Category.objects.all()
+    tags = Tag.objects.all()[:10]
+    user = request.user
+    context = {'page_obj': page_obj,
+               'categories': categotries, 'tags': tags, 'user': user}
+    return render(request, 'home.html', context)
+
+#################### search button in sidebar action ##################
+def search(request):
+    query = request.GET.get('q')
+    posts = Post.objects.filter(Q(title__icontains=query))
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    categotries = Category.objects.all()
+    tags = Tag.objects.filter(Q(name__icontains=query))[:10]
+    user = request.user
+    context = {'page_obj': page_obj,
+               'categories': categotries, 'tags': tags, 'user': user}
+    return render(request, 'home.html', context)
+
+        
+       

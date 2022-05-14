@@ -6,6 +6,10 @@ urlpatterns = [
     path('post/<int:id>',views.post_detail),
     path('subscribe/<cat_id>', views.subscribe),
     path('unsubscribe/<cat_id>', views.unsubscribe),
+    path('createPost/', views.createPost, name='create'),
+    path('category/<cat_id>', views.categoryPosts),
+    path('tag/<tag_id>', views.tagPosts),
+    path('search', views.search),
 ]    	
 
 
