@@ -10,5 +10,6 @@ urlpatterns = [
     path("profile/edit/",views.edit_profile , name="edit_profile"),
     path('blocked/',views.blocked,name="blocked"),
     path("password/change/",views.change_password , name="change_password"),
-        path('password-reset/', auth_views.PasswordResetView.as_view(template_name="registration/password_reset_form.html"), name='password_reset'),
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name="registration/password_reset_form.html"), name='password_reset'),
+     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name="registration/password_reset_done.html"), name='password_reset_done'),
 ]
