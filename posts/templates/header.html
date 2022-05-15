@@ -12,7 +12,7 @@
 			{% endif %} {% if not request.user.is_authenticated %}
 			<li><a href="/users/login">Login</a></li>
 			{% endif %} {% if request.user.is_staff %}
-			<li id="create"><a href="/posts/createPost">Create Post</a></li>
+			<li id="create"><a href="/createPost">Create Post</a></li>
 			{% endif %}
 			<li id="home" class=""><a href="/">Home</a></li>
 			{% if request.user.is_authenticated %}

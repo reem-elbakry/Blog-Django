@@ -4,6 +4,7 @@ from django.core.paginator import  Paginator
 from users.logger import log
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, get_object_or_404
 from posts.forms import PostForm, CommentForm
 from users.util_funcs import delete_profile_pic
 from users.logger import log
@@ -27,6 +28,30 @@ def posts(request):
                'tags': tags, 'user': user, 'popular_posts': popular_posts}
     return render(request, 'home.html', context)
 
+########################## create post #######################
+def createPost(request):
+    student_form = PostForm()
+    if request.method == 'POST':
+        student_form = PostForm(request.POST, request.FILES)
+    if student_form.is_valid():
+            post = student_form.save(commit=False)
+            post.user = request.user
+            tag_list = getTags(request.POST.get('post_tags'))
+            post.save()
+            queryset = Tag.objects.filter(name__in=tag_list)
+            post.tags.set(queryset)
+            return HttpResponseRedirect('/')
+    else:
+        context = {"student_form": student_form}
+        return render(request, "form_post.html", context)
+
+########################## tags #######################
+def getTags(string):
+    tag_list = list(string.split(" "))
+    for tag in tag_list:
+        if not Tag.objects.filter(name=tag):
+            Tag.objects.create(name=tag)
+    return tag_list 
 
 
 def post_detail(request, id):
@@ -65,6 +90,35 @@ def post_detail(request, id):
     }
     return render(request, 'single.html', context)
 
+########################## update post #######################
+def post_update(request, id):
+    post = get_object_or_404(Post, id=id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            img = request.FILES.get('image')
+            if (img):
+                if(post.image):
+                    delete_profile_pic(post.image)
+                post.image = img
+            post.user = request.user
+            tag_list = getTags(request.POST.get('post_tags'))
+            post.save()
+            queryset = Tag.objects.filter(name__in=tag_list)
+            post.tags.set(queryset)
+            return HttpResponseRedirect('/')
+    else:
+        form = PostForm(instance=post)
+        context = {"pt_form": form}
+        return render(request, "edit_post.html", context)    
+
+########################## delete post #######################
+def post_delete(request, num):
+    instance = Post.objects.get(id=num)
+    instance.delete()
+    return HttpResponseRedirect('/')
+
 
 def subscribe(request, cat_id):
     user = request.user
@@ -84,23 +138,7 @@ def unsubscribe(request, cat_id):
     category = Category.objects.get(id=cat_id)
     category.user.remove(user)
     return HttpResponseRedirect('/')
-
-
-def createPost(request):
-    student_form = PostForm()
-    if request.method == 'POST':
-        student_form = PostForm(request.POST, request.FILES)
-    if student_form.is_valid():
-            post = student_form.save(commit=False)
-            post.user = request.user
-            tag_list = getTags(request.POST.get('post_tags'))
-            post.save()
-            queryset = Tag.objects.filter(name__in=tag_list)
-            post.tags.set(queryset)
-            return HttpResponseRedirect('/')
-    else:
-        context = {"student_form": student_form}
-        return render(request, "form_post.html", context)
+       
 
 ########################## searche by category#######################
 def categoryPosts(request, cat_id):
@@ -143,6 +181,61 @@ def search(request):
     context = {'page_obj': page_obj,
                'categories': categotries, 'tags': tags, 'user': user}
     return render(request, 'home.html', context)
+############### delete comment in post ######################
+def commentDelete(request, post_id, com_id):
+    comment = Comment.objects.get(id=com_id)
+    comment.delete()
+    return HttpResponseRedirect('/post/'+post_id)
+############ edit commint in posts #########################
+def commentEdit(request, post_id,com_id):
+    comment = Comment.objects.get(id=com_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST,request.FILES, instance=comment )
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = CommentForm(instance=comment)
+        return render(request, 'edit_comment.html', {'form': form})
 
+
+
+def like_post(request, id):
+    post = get_object_or_404(Post, pk=id)
+    postIsDisliked = post.dislikes.all()
+    post_isliked = post.likes.all()
+    user = request.user
+    if (user not in post_isliked):
+        if(user not in postIsDisliked):
+            post.likes.add(user)
+            post.save()
+    else:
+        post.likes.remove(user)
+        post.save()
+    return HttpResponseRedirect("/post/"+id)
+
+
+
+
+def dislike_post(request, id):
+    post = get_object_or_404(Post, pk=id)
+    postIsDisliked = post.dislikes.all()
+    post_isliked = post.likes.all()
+    user = request.user
+    if (user not in postIsDisliked):
+        if(user not in post_isliked):
+            post.dislikes.add(user)
+            post.save()
+    else:
+        post.dislikes.remove(user)
+        post.save()
+
+    total = post.dislikes.count()
+    if(total == 10):
+        post.delete()
+        return HttpResponse("<h1> this post has been deleted </h1>")
+    return HttpResponseRedirect("/post/"+id)
+ 
         
-       

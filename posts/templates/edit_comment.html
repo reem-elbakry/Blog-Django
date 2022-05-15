@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+{% block post_block %}
+    <h2>Edit Comment</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

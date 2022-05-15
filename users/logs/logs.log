@@ -7,7 +7,6 @@ admin unlocked gabr.
 no picunsupported operand type(s) for +: 'WindowsPath' and 'str'
 admin removed gabr.
 admin demoted gado.
-=======
 /media/defaultImage.png
 created a new user successfully with username: Abdelfattah
 couldn't send email message[WinError 10061] No connection could be made because the target machine actively refused it
@@ -20,12 +19,8 @@ couldn't send email message[Errno 111] Connection refused
 invalid login form
 invalid login form
 admin logged in successfully
-<<<<<<< HEAD
 Abdelfattah logged in successfully
-=======
 reem logged in successfully
-
-=======
 reem logged in successfully
 valid edit form
 no picunsupported operand type(s) for +: 'PosixPath' and 'str'
@@ -57,6 +52,16 @@ couldn't send email message[Errno 111] Connection refused
 valid edit form
 no picunsupported operand type(s) for +: 'PosixPath' and 'str'
 nayra  updated his profile
-invalid login form
-invalid login form
+no picunsupported operand type(s) for +: 'WindowsPath' and 'str'
+nayra logged in successfully
 admin logged in successfully
+nayra logged in successfully
+admin logged in successfully
+admin logged in successfully
+admin logged in successfully
+admin logged in successfully
+nayra logged in successfully
+couldn't send email message[Errno 111] Connection refused
+couldn't send email message[Errno 111] Connection refused
+admin logged in successfully
+nayra logged in successfully

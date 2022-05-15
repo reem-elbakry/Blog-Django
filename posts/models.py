@@ -38,7 +38,7 @@ class Post(models.Model):
     tags = models.ManyToManyField('Tag', blank=True,)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='../media', null=True, blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     date_published = models.DateTimeField(
         auto_now_add=True, verbose_name="date published")
     date_updated = models.DateTimeField(
