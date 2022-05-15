@@ -181,6 +181,9 @@ def search(request):
     context = {'page_obj': page_obj,
                'categories': categotries, 'tags': tags, 'user': user}
     return render(request, 'home.html', context)
-
+############### delete comment in post ######################
+def commentDelete(request, post_id, com_id):
+    comment = Comment.objects.get(id=com_id)
+    comment.delete()
+    return HttpResponseRedirect('/post/'+post_id)
         
-       
