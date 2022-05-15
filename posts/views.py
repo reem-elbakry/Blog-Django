@@ -13,7 +13,7 @@ from django.db.models import Q
 # Create your views here.
 
 
-
+##########################all posts ###########################3
 def posts(request):
     posts = Post.objects.all()
     popular_posts = Post.objects.order_by('-likes')[:5]
@@ -53,7 +53,7 @@ def getTags(string):
             Tag.objects.create(name=tag)
     return tag_list 
 
-
+####################show post ######################
 def post_detail(request, id):
     categotries = Category.objects.all()
     tags = Tag.objects.all()[:10]
@@ -120,6 +120,7 @@ def post_delete(request, num):
     return HttpResponseRedirect('/')
 
 
+######################################subscribe ############################
 def subscribe(request, cat_id):
     user = request.user
     category = Category.objects.get(id=cat_id)
@@ -132,7 +133,7 @@ def subscribe(request, cat_id):
         log("couldn't send email message"+str(ex))
     return HttpResponseRedirect('/')  
 
-
+##########################################3discribe ######################
 def unsubscribe(request, cat_id):
     user = request.user
     category = Category.objects.get(id=cat_id)
@@ -200,7 +201,7 @@ def commentEdit(request, post_id,com_id):
         form = CommentForm(instance=comment)
         return render(request, 'edit_comment.html', {'form': form})
 
-
+#########################like post #############################
 
 def like_post(request, id):
     post = get_object_or_404(Post, pk=id)
@@ -217,7 +218,7 @@ def like_post(request, id):
     return HttpResponseRedirect("/post/"+id)
 
 
-
+################################## dislike post ##########################
 
 def dislike_post(request, id):
     post = get_object_or_404(Post, pk=id)
