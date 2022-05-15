@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'djangoproject',
-        'USER': 'marwaezzat',
-        'PASSWORD': '#Hm3405060',
+        'USER': 'reem',
+        'PASSWORD': 'rimoura95',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -136,3 +136,26 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'reemelbakry95@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = 587
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+
+
+RESET_URL = 'accounts/login'
+RESET_REDIRECT_URL = 'users/login' 
+

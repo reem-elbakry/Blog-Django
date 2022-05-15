@@ -37,7 +37,7 @@ def register(request):
                     login(request, user)
                     try:
                         send_mail('Welcome to our blog', 'Django Blog team welcomes you to our blog .',
-                                  'dproject.os40@gmail.com', [user.email], fail_silently=False,)
+                                  'from@gmail.com', [user.email], fail_silently=False,)
                     except Exception as ex:
                         log("couldn't send email message"+str(ex))
 
