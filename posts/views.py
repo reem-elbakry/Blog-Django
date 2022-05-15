@@ -186,4 +186,17 @@ def commentDelete(request, post_id, com_id):
     comment = Comment.objects.get(id=com_id)
     comment.delete()
     return HttpResponseRedirect('/post/'+post_id)
+############ edit commint in posts #########################
+def commentEdit(request, post_id,com_id):
+    comment = Comment.objects.get(id=com_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST,request.FILES, instance=comment )
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = CommentForm(instance=comment)
+        return render(request, 'edit_comment.html', {'form': form})
         

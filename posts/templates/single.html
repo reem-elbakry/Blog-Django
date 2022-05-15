@@ -57,6 +57,7 @@
 				<input type="submit" value="submit"  class="btn btn-success">
 				{% if request.user == comment.user %}
 				<a class="btn btn-danger" href="/deletecomment/{{post.id}}/{{comment.id}}"> Delete </a>
+				<a class="btn btn-warning" href="/editcomment/{{post.id}}/{{comment.id}}"> Edit </a>
 				{% endif%}
 			</form>
 			{% endif %}	
@@ -73,6 +74,7 @@
 					<p>{{reply.filtered_content}}</p>
 					{% if request.user == reply.user %}
 					<a class="btn btn-danger" href="/deletecomment/{{post.id}}/{{reply.id}}"> Delete </a>
+					<a class="btn btn-warning" href="/editcomment/{{post.id}}/{{reply.id}}"> Edit </a>
 					{% endif%}
 				</div>
 				</li>

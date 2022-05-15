@@ -13,7 +13,7 @@ urlpatterns = [
     path('updatepost/<id>',views.post_update),
     path('delpost/<num>',views.post_delete),    	
     path('deletecomment/<post_id>/<com_id>', views.commentDelete, name='commentDelete'),
-
+    path('editcomment/<post_id>/<com_id>', views.commentEdit),
 ]    	
 
 
