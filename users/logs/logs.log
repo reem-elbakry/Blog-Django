@@ -66,3 +66,8 @@ couldn't send email message[Errno 111] Connection refused
 admin logged in successfully
 nayra logged in successfully
 reem logged in successfully
+form is valid
+form is valid
+couldn't send email message[WinError 10061] No connection could be made because the target machine actively refused it
+Admin1 promoted Abdelfattah.
+Admin1 demoted Abdelfattah.
