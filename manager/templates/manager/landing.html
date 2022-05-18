@@ -32,8 +32,9 @@
         <td>{{post.user}}</td>
         <td> <a class="btn btn-warning" href="/post/{{post.id}}">show</a></td>
 
-        <td> <a class="btn btn-danger" href="post_delete/{{post.id}}"
-            onclick="return confirm('are you sure ?');">delete</a> </td>
+        <td> <a class="btn btn-danger" href="/delpost/{{post.id}}"
+            onclick="return confirm('are you sure ?');">delete</a>
+        </td>
         <td> <a class="btn btn-success" href="/updatepost/{{post.id}}">Update</a> </td>
       </tr>
 

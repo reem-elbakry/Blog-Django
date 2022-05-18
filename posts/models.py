@@ -36,7 +36,7 @@ class Post(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     body = models.TextField()
     tags = models.ManyToManyField('Tag', blank=True,)
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     date_published = models.DateTimeField(

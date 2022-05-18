@@ -110,7 +110,7 @@ def delete_category(request, cat_id):
     if(is_authorized_admin(request)):
         category = Category.objects.get(id=cat_id)
         category.delete()
-        return HttpResponseRedirect('/manage/posts#categories')
+        return HttpResponseRedirect('/manager/posts#categories')
     else:
         return HttpResponseRedirect("/")
 
@@ -131,7 +131,7 @@ def add_profane_word(request):
 
 
 def delete_profane_word(request, id):
-    if(is_authorized_admin(is_authorized_admin(request))):
+    if(is_authorized_admin(request)):
         profane_word = Profanity.objects.get(id=id)
         profane_word.delete()
         return HttpResponseRedirect('/manager/posts#forbidden')
